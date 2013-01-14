@@ -15,13 +15,15 @@ function Invoke-LoudRickRoll {
     PS C:\>Invoke-LoudRickRoll
 #>
 
-$IEComObject = New-Object -com "InternetExplorer.Application"
-$IEComObject.visible = $False
-$IEComObject.navigate("http://www.youtube.com/watch?v=oHg5SJYRHA0")
-
-    For (1..2) {
-        $WscriptObject = New-Object -com wscript.shell
-        $WscriptObject.SendKeys([char]175)
-    }
+    $IEComObject = New-Object -com "InternetExplorer.Application"
+    $IEComObject.visible = $False
+    $IEComObject.navigate("http://www.youtube.com/watch?v=oHg5SJYRHA0")
+    $EndTime = (Get-Date).addminutes(3)
+        
+        Do {
+            $WscriptObject = New-Object -com wscript.shell
+            $WscriptObject.SendKeys([char]175)
+        }
+        Until ((Get-Date) -gt $EndTime)
 }
 Invoke-LoudRickRoll
