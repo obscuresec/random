@@ -195,15 +195,10 @@ namespace PowerShellPerm.Utils
     Try {$LoadTest = [PowerShellPerm.Utils.TokenManipulator]}
         Catch {Add-Type $CSharpCode}
 
-    #Try {
-        
-        Get-ChildItem $Path -Recurse | ForEach-Object {
+            Get-ChildItem $Path -Recurse | ForEach-Object {
             $File = $_.FullName
             ChangeOwner
-            #ChangePermissions
+            ChangePermissions
         }
         Write-Verbose "$Output"
-    #}
-
-    #Catch {Write-Error 'An error occurred, are you running as Admin?'}
 }
