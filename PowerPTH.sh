@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# -ne 5 ]
 then
-  echo "PowerPTH: Combines PTH-Suite and PowerSploit for remote AV-bypass with Meterpreter"
+	echo "PowerPTH: Combines PTH-Suite and PowerSploit for remote AV-bypass with Meterpreter"
 	echo "                   by Chris Campbell (@obscuresec)                                "
 	echo "                             BSD 3-Clause                                         "
 	echo "    Special thanks to the developers of PTH-Suite & PowerSploit (Skip and Matt)   "
