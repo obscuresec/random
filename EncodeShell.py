@@ -53,9 +53,7 @@ try:
     
     print "The command is:"
     print ""
-    print ps
- 
-	
+    print ps	
   
 #index error
 except IndexError:
