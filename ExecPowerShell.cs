@@ -1,6 +1,6 @@
-#Dirty way to run invoke shellcode powershell
-#Author: Chris Campbell 
-#Used to execute dll preloading attack for UACbypass
+//Dirty way to run invoke shellcode powershell
+//Author: Chris Campbell 
+//Used to execute dll preloading attack for UACbypass
 
 using System;
 
