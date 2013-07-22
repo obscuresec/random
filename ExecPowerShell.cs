@@ -1,6 +1,8 @@
 //Dirty way to run invoke shellcode powershell
 //Author: Chris Campbell 
 //Used to execute dll preloading attack for UACbypass
+//csc.exe /t:library /out:CRYPTBASE.dll c:\demo\ExecPowerShell.cs
+//Windows8: drop in c:\windows\ehome\ with com file io and execute c:\windows\ehome\Mcx2Prov.exe 
 
 using System;
 
