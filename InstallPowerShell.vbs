@@ -33,7 +33,7 @@ End Function
 
 DownloadFile("http://download.microsoft.com/download/0/8/c/08c19fa4-4c4f-4ffb-9d6c-150906578c9e/NetFx20SP1_x86.exe")
 DownloadFile("http://download.microsoft.com/download/E/C/E/ECE99583-2003-455D-B681-68DB610B44A4/WindowsXP-KB968930-x86-ENG.exe")
-Dim WshShell, oFS, TempDir, NetPath, PsPath
+Dim WshShell
 Set WshShell = CreateObject("WScript.Shell")
 ReturnCode = WshShell.run ("%temp%\NetFx20SP1_x86.exe /z /u /q", 1, True)
 WshShell.run ("%temp%\WindowsXP-KB968930-x86-ENG.exe /z /u /q")
