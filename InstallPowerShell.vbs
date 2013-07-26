@@ -28,7 +28,6 @@ Function DownloadFile(DownloadUrl)
   Set oADOStream = Nothing
   End if
   Set oXMLHTTP = Nothing
-  Dim objshell
 End Function
 
 DownloadFile("http://download.microsoft.com/download/0/8/c/08c19fa4-4c4f-4ffb-9d6c-150906578c9e/NetFx20SP1_x86.exe")
