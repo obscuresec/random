@@ -42,7 +42,7 @@ try:
     num = sys.argv[4]
 
     gen(payload,lhost,lport,num)
-    #build(payload,lhost,lport)
+    build(payload,lhost,lport)
 
 #index error
 except IndexError:
