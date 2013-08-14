@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # EncodeShell.py
 # Simple python script to output meterpreter commands for WMIS
