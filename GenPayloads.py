@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # GenPayloads.py
 # Simple python script to generate a number of metasploit payload binaries and then optionally start a handler for testing
