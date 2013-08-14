@@ -42,7 +42,6 @@ def multi(payload,lhost,lport,num):
             commands.append(venom)       
         pool = Pool(processes=15)
         run = pool.map(generate, commands)
-        #pool.map(test, commands)
         pool.close()
         print 'Completed generating payloads.'
     except:
