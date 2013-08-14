@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # StartListener.py
 # Simple python script to start a Meterpreter HTTPs Handler
